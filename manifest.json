@@ -679,77 +679,6 @@
         "RemoteSha": "0.3.2"
       }
     },
-    "covr": {
-      "Source": "CRAN",
-      "Repository": "https://cran.rstudio.com",
-      "description": {
-        "Encoding": "UTF-8",
-        "Package": "covr",
-        "Title": "Test Coverage for Packages",
-        "Version": "3.6.5",
-        "Authors@R": "c(\n    person(\"Jim\", \"Hester\", email = \"james.f.hester@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Willem\", \"Ligtenberg\", role = \"ctb\"),\n    person(\"Kirill\", \"Müller\", role = \"ctb\"),\n    person(\"Henrik\", \"Bengtsson\", role = \"ctb\"),\n    person(\"Steve\", \"Peak\", role = \"ctb\"),\n    person(\"Kirill\", \"Sevastyanenko\", role = \"ctb\"),\n    person(\"Jon\", \"Clayden\", role = \"ctb\"),\n    person(\"Robert\", \"Flight\", role = \"ctb\"),\n    person(\"Eric\", \"Brown\", role = \"ctb\"),\n    person(\"Brodie\", \"Gaslam\", role = \"ctb\"),\n    person(\"Will\", \"Beasley\", role = \"ctb\"),\n    person(\"Robert\", \"Krzyzanowski\", role = \"ctb\"),\n    person(\"Markus\", \"Wamser\", role = \"ctb\"),\n    person(\"Karl\", \"Forner\", role = \"ctb\"),\n    person(\"Gergely\", \"Daróczi\", role = \"ctb\"),\n    person(\"Jouni\", \"Helske\", role = \"ctb\"),\n    person(\"Kun\", \"Ren\", role = \"ctb\"),\n    person(\"Jeroen\", \"Ooms\", role = \"ctb\"),\n    person(\"Ken\", \"Williams\", role = \"ctb\"),\n    person(\"Chris\", \"Campbell\", role = \"ctb\"),\n    person(\"David\", \"Hugh-Jones\", role = \"ctb\"),\n    person(\"Qin\", \"Wang\", role = \"ctb\"),\n    person(\"Doug\", \"Kelkhoff\", role = \"ctb\"),\n    person(\"Ivan\", \"Sagalaev\", role = c(\"ctb\", \"cph\"), comment = \"highlight.js library\"),\n    person(\"Mark\", \"Otto\", role = \"ctb\", comment = \"Bootstrap library\"),\n    person(\"Jacob\", \"Thornton\", role = \"ctb\", comment = \"Bootstrap library\"),\n    person(family = \"Bootstrap contributors\", role = \"ctb\", comment = \"Bootstrap library\"),\n    person(family = \"Twitter, Inc\", role = \"cph\", comment = \"Bootstrap library\")\n    )",
-        "Description": "Track and report code coverage for your package and (optionally)\n    upload the results to a coverage service like 'Codecov' <https://about.codecov.io> or\n    'Coveralls' <https://coveralls.io>. Code coverage is a measure of the amount of\n    code being exercised by a set of tests. It is an indirect measure of test\n    quality and completeness. This package is compatible with any testing\n    methodology or framework and tracks coverage of both R code and compiled\n    C/C++/FORTRAN code.",
-        "URL": "https://covr.r-lib.org, https://github.com/r-lib/covr",
-        "BugReports": "https://github.com/r-lib/covr/issues",
-        "Depends": "R (>= 3.1.0), methods",
-        "Imports": "digest, stats, utils, jsonlite, rex, httr, cli, withr (>=\n1.0.2), yaml",
-        "Suggests": "R6, S7 (>= 0.2.0), curl, knitr, rmarkdown, htmltools, DT (>=\n0.2), testthat (>= 3.0.0), rlang, rstudioapi (>= 0.2), xml2 (>=\n1.0.0), parallel, memoise, covr, box (>= 1.2.0)",
-        "License": "MIT + file LICENSE",
-        "VignetteBuilder": "knitr",
-        "RoxygenNote": "7.3.3",
-        "Config/testthat/edition": "3",
-        "Config/testthat/parallel": "TRUE",
-        "NeedsCompilation": "yes",
-        "Packaged": "2025-11-06 16:15:28 UTC; jimhester",
-        "Author": "Jim Hester [aut, cre],\n  Willem Ligtenberg [ctb],\n  Kirill Müller [ctb],\n  Henrik Bengtsson [ctb],\n  Steve Peak [ctb],\n  Kirill Sevastyanenko [ctb],\n  Jon Clayden [ctb],\n  Robert Flight [ctb],\n  Eric Brown [ctb],\n  Brodie Gaslam [ctb],\n  Will Beasley [ctb],\n  Robert Krzyzanowski [ctb],\n  Markus Wamser [ctb],\n  Karl Forner [ctb],\n  Gergely Daróczi [ctb],\n  Jouni Helske [ctb],\n  Kun Ren [ctb],\n  Jeroen Ooms [ctb],\n  Ken Williams [ctb],\n  Chris Campbell [ctb],\n  David Hugh-Jones [ctb],\n  Qin Wang [ctb],\n  Doug Kelkhoff [ctb],\n  Ivan Sagalaev [ctb, cph] (highlight.js library),\n  Mark Otto [ctb] (Bootstrap library),\n  Jacob Thornton [ctb] (Bootstrap library),\n  Bootstrap contributors [ctb] (Bootstrap library),\n  Twitter, Inc [cph] (Bootstrap library)",
-        "Maintainer": "Jim Hester <james.f.hester@gmail.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2025-11-09 20:50:02 UTC",
-        "Built": "R 4.5.0; aarch64-apple-darwin20; 2025-11-09 23:04:27 UTC; unix",
-        "Archs": "covr.so.dSYM",
-        "RemoteType": "standard",
-        "RemotePkgRef": "covr",
-        "RemoteRef": "covr",
-        "RemoteRepos": "https://cran.rstudio.com",
-        "RemoteSha": "3.6.5"
-      }
-    },
-    "covrpage": {
-      "Source": "github",
-      "Repository": null,
-      "description": {
-        "Package": "covrpage",
-        "Title": "Create a Readme Summary Page for GitHub testthat and covr\nOutputs",
-        "Version": "0.2",
-        "Authors@R": "c(\n  person(given   = \"Jonathan\",\n         family  = \"Sidi\",\n         email   = \"yonicd@gmail.com\",\n         role    = c(\"aut\",'cre'),\n         comment = c(ORCID = \"0000-0002-4222-1819\")\n         ),\n  person(given   = \"Locke Data\",\n         role    = \"fnd\",\n         comment = \"https://itsalocke.com\")\n  )",
-        "Description": "Create a README file to place in package test subdirectory to communicate \n  with other users in more detail results of testthat and covr.",
-        "License": "MIT + file LICENSE",
-        "URL": "https://github.com/yonicd/covrpage",
-        "BugReports": "https://github.com/yonicd/covrpage/issues",
-        "Encoding": "UTF-8",
-        "Depends": "R (>= 4.1.0)",
-        "Imports": "utils, git2r, rmarkdown, covr, stats, testthat, curl, whisker,\nwithr, remotes",
-        "RoxygenNote": "7.2.1",
-        "Suggests": "knitr,spelling, rstudioapi",
-        "VignetteBuilder": "knitr",
-        "Language": "en-US",
-        "RemoteType": "github",
-        "RemoteHost": "api.github.com",
-        "RemoteRepo": "covrpage",
-        "RemoteUsername": "yonicd",
-        "RemoteRef": "HEAD",
-        "RemoteSha": "bafeb195d1999b8c3a48186e26f59cafcdfa3670",
-        "GithubRepo": "covrpage",
-        "GithubUsername": "yonicd",
-        "GithubRef": "HEAD",
-        "GithubSHA1": "bafeb195d1999b8c3a48186e26f59cafcdfa3670",
-        "NeedsCompilation": "no",
-        "Packaged": "2025-12-27 10:15:14 UTC; marcoslima",
-        "Author": "Jonathan Sidi [aut, cre] (ORCID:\n    <https://orcid.org/0000-0002-4222-1819>),\n  Locke Data [fnd] (https://itsalocke.com)",
-        "Maintainer": "Jonathan Sidi <yonicd@gmail.com>",
-        "Built": "R 4.5.0; ; 2025-12-27 10:15:14 UTC; unix"
-      }
-    },
     "cpp11": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -1409,36 +1338,6 @@
         "RemoteSha": "1.5.0"
       }
     },
-    "git2r": {
-      "Source": "CRAN",
-      "Repository": "https://cran.rstudio.com",
-      "description": {
-        "Type": "Package",
-        "Package": "git2r",
-        "Title": "Provides Access to Git Repositories",
-        "Authors@R": "c(person(\"Stefan\", \"Widgren\", role = c(\"aut\", \"cre\"),\n                    email = \"stefan.widgren@gmail.com\",\n                    comment = c(ORCID = \"0000-0001-5745-2284\")),\n             person(\"Gabor\", \"Csardi\", role = \"ctb\"),\n             person(\"Gregory\", \"Jefferis\", role = \"ctb\"),\n             person(\"Jennifer\", \"Bryan\", role = \"ctb\"),\n             person(\"Jeroen\", \"Ooms\", role = \"ctb\"),\n             person(\"Jim\", \"Hester\", role = \"ctb\"),\n             person(\"John\", \"Blischak\", role = \"ctb\"),\n             person(\"Karthik\", \"Ram\", role = \"ctb\"),\n             person(\"Peter\", \"Carbonetto\", role = \"ctb\"),\n             person(\"Scott\", \"Chamberlain\", role = \"ctb\"),\n             person(\"Thomas\", \"Rosendal\", role = \"ctb\"))",
-        "Description": "Interface to the 'libgit2' library, which is a pure C\n    implementation of the 'Git' core methods. Provides access to 'Git'\n    repositories to extract data and running some basic 'Git'\n    commands.",
-        "Version": "0.36.2",
-        "License": "GPL-2",
-        "URL": "https://docs.ropensci.org/git2r/,\nhttps://github.com/ropensci/git2r",
-        "BugReports": "https://github.com/ropensci/git2r/issues",
-        "Imports": "graphics, utils",
-        "Depends": "R (>= 4.0)",
-        "Suggests": "getPass",
-        "NeedsCompilation": "yes",
-        "SystemRequirements": "libgit2 (>= 1.0) and its dependencies libssh2 and\nopenssl header and libraries.",
-        "Collate": "'blame.R' 'blob.R' 'branch.R' 'bundle_r_package.R'\n'checkout.R' 'commit.R' 'config.R' 'contributions.R'\n'credential.R' 'diff.R' 'fetch.R' 'git2r.R' 'index.R'\n'libgit2.R' 'merge.R' 'note.R' 'odb.R' 'plot.R' 'pull.R'\n'punch_card.R' 'push.R' 'reference.R' 'reflog.R' 'refspec.R'\n'remote.R' 'repository.R' 'reset.R' 'revparse.R' 'sha.R'\n'signature.R' 'stash.R' 'status.R' 'tag.R' 'time.R' 'tree.R'\n'when.R'",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "7.3.2",
-        "Packaged": "2025-03-29 09:17:55 UTC; stefan",
-        "Author": "Stefan Widgren [aut, cre] (<https://orcid.org/0000-0001-5745-2284>),\n  Gabor Csardi [ctb],\n  Gregory Jefferis [ctb],\n  Jennifer Bryan [ctb],\n  Jeroen Ooms [ctb],\n  Jim Hester [ctb],\n  John Blischak [ctb],\n  Karthik Ram [ctb],\n  Peter Carbonetto [ctb],\n  Scott Chamberlain [ctb],\n  Thomas Rosendal [ctb]",
-        "Maintainer": "Stefan Widgren <stefan.widgren@gmail.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2025-03-29 10:00:02 UTC",
-        "Built": "R 4.5.0; aarch64-apple-darwin20; 2025-03-31 22:46:16 UTC; unix",
-        "Archs": "git2r.so.dSYM"
-      }
-    },
     "gitcreds": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -1995,31 +1894,6 @@
         "Date/Publication": "2025-08-27 08:40:03 UTC",
         "Built": "R 4.5.0; aarch64-apple-darwin20; 2025-09-01 01:32:24 UTC; unix",
         "Archs": "later.so.dSYM"
-      }
-    },
-    "lazyeval": {
-      "Source": "CRAN",
-      "Repository": "https://cran.rstudio.com",
-      "description": {
-        "Package": "lazyeval",
-        "Version": "0.2.2",
-        "Title": "Lazy (Non-Standard) Evaluation",
-        "Description": "An alternative approach to non-standard evaluation using\n    formulas. Provides a full implementation of LISP style 'quasiquotation',\n    making it easier to generate code with other code.",
-        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", ,\"hadley@rstudio.com\", c(\"aut\", \"cre\")),\n    person(\"RStudio\", role = \"cph\")\n    )",
-        "License": "GPL-3",
-        "LazyData": "true",
-        "Depends": "R (>= 3.1.0)",
-        "Suggests": "knitr, rmarkdown (>= 0.2.65), testthat, covr",
-        "VignetteBuilder": "knitr",
-        "RoxygenNote": "6.1.1",
-        "NeedsCompilation": "yes",
-        "Packaged": "2019-03-15 14:18:01 UTC; lionel",
-        "Author": "Hadley Wickham [aut, cre],\n  RStudio [cph]",
-        "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2019-03-15 17:50:07 UTC",
-        "Built": "R 4.5.0; aarch64-apple-darwin20; 2025-03-31 21:52:09 UTC; unix",
-        "Archs": "lazyeval.so.dSYM"
       }
     },
     "lifecycle": {
@@ -2798,39 +2672,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2025-07-24 21:40:02 UTC",
         "Built": "R 4.5.0; ; 2025-07-24 22:11:42 UTC; unix"
-      }
-    },
-    "rex": {
-      "Source": "CRAN",
-      "Repository": "https://cran.rstudio.com",
-      "description": {
-        "Type": "Package",
-        "Package": "rex",
-        "Title": "Friendly Regular Expressions",
-        "Version": "1.2.1",
-        "Authors@R": "c(\n    person(\"Kevin\", \"Ushey\", , \"kevinushey@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Jim\", \"Hester\", , \"james.f.hester@gmail.com\", role = \"aut\"),\n    person(\"Robert\", \"Krzyzanowski\", , \"rkrzyzanowski@gmail.com\", role = \"aut\")\n  )",
-        "Description": "A friendly interface for the construction of regular\n    expressions.",
-        "License": "MIT + file LICENSE",
-        "URL": "https://github.com/kevinushey/rex",
-        "BugReports": "https://github.com/kevinushey/rex/issues",
-        "Imports": "lazyeval",
-        "Suggests": "covr, dplyr, ggplot2, Hmisc, knitr, magrittr, rmarkdown,\nroxygen2, rvest, stringr, testthat",
-        "VignetteBuilder": "knitr",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "7.1.2",
-        "Collate": "'aaa.R' 'utils.R' 'escape.R' 'capture.R' 'character_class.R'\n'counts.R' 'lookarounds.R' 'match.R' 'or.R' 'rex-mode.R'\n'rex.R' 'shortcuts.R' 'wildcards.R' 'zzz.R'",
-        "NeedsCompilation": "no",
-        "Packaged": "2021-11-24 20:51:05 UTC; jhester",
-        "Author": "Kevin Ushey [aut, cre],\n  Jim Hester [aut],\n  Robert Krzyzanowski [aut]",
-        "Maintainer": "Kevin Ushey <kevinushey@gmail.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2021-11-26 16:11:02 UTC",
-        "Built": "R 4.5.0; ; 2025-03-31 22:08:07 UTC; unix",
-        "RemoteType": "standard",
-        "RemotePkgRef": "rex",
-        "RemoteRef": "rex",
-        "RemoteRepos": "https://cran.rstudio.com",
-        "RemoteSha": "1.2.1"
       }
     },
     "rhub": {
@@ -4026,7 +3867,7 @@
       "checksum": "3003e8f605c1a699194da3e4148a90ca"
     },
     "dev/02_dev.R": {
-      "checksum": "c70fa18d60a1870faedadb0e0961206e"
+      "checksum": "b35b5f308ce35e7440ed31bd68d1d001"
     },
     "dev/03_deploy.R": {
       "checksum": "8f60d232c82f906cd3b739f8180153ec"
