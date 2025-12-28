@@ -43,9 +43,9 @@ golem_add_external_resources <- function() {
   )
 
   tags$head(
-    favicon(),
-    bundle_resources(
-      path = app_sys("app/www"),
+    golem::favicon(),
+    golem::bundle_resources(
+      path = golem::app_sys("app/www"),
       app_title = "gaivotapp"
     )
     # Add here other external resources
