@@ -1,0 +1,81 @@
+I’m building a Shiny application using the golem framework in R, and I want guidance that assumes the following context and decisions have already been made:
+
+ARCHITECTURE & GOALS
+- I am using golem (package-based Shiny app).
+- I have a separate R project using targets that builds data marts.
+- The golem app is read-only and consumes outputs from those marts.
+- Data marts are mainly Parquet (split by year/group) plus some derived metadata.
+- I want clean separation between:
+  - data engineering (targets project)
+  - application/UI logic (golem project)
+
+DEPLOYMENT CONSTRAINTS
+- The app is deployed to Posit Connect.
+- Posit deploys only code, not arbitrary external data.
+- I do NOT have permission to copy data into the Posit server filesystem.
+- Therefore, I may need to:
+  - Either consume externally published data (if available)
+  - Or bundle a ≤100 MB snapshot of the data inside the app
+
+DATA STRATEGY (CURRENT DECISION)
+- For now, I am using a SNAPSHOT approach:
+  - Data is bundled inside the golem project under `inst/extdata/`
+  - This makes the app a “snapshot-in-time” application
+  - Updates require redeploying the app
+- I understand that `inst/` is always bundled during deploy because golem apps are installed as R packages.
+- I access bundled data via `system.file("extdata", package = golem::get_golem_name())`
+- I do NOT write to this data at runtime.
+
+OPTIONAL FUTURE STRATEGY
+- I may later support external data via environment variables (e.g. ASSET_DATA_ROOT),
+  with snapshot data as a fallback.
+
+CODE ORGANIZATION RULES (IMPORTANT)
+- All R code must live in a FLAT `R/` directory.
+- Subdirectories under `R/` are NOT supported by R package namespaces.
+- No `source()` hacks for production code.
+- Functions must be:
+  - Defined in files directly under `R/`
+  - Properly exported with roxygen2 if used across files
+  - Available in the package namespace after `devtools::document()` + `load_all()`
+
+MODULE DESIGN
+- I am using golem modules.
+- A module does NOT have to equal a tab.
+- A single domain (e.g. “asset”) may:
+  - Have multiple plots and tables
+  - Be rendered in multiple tabs
+  - Share data logic and rendering helpers
+- I typically define:
+  - mod_asset_ui()
+  - mod_asset_server()
+  in a single file (e.g. R/mod_asset.R)
+- Helper functions for data access or plotting live in separate R files (flat structure).
+
+DATA ACCESS LAYER (DAL)
+- I use DAL-style functions like:
+  - read_asset_metadata()
+  - read_asset_parquet()
+- These functions are pure readers and do not load data at file parse time.
+- Data is loaded in `app_server()` and passed to modules.
+
+TECH STACK
+- R, golem, Shiny
+- targets (separate project)
+- Arrow (Parquet)
+- jsonlite (JSON metadata)
+- Posit Connect
+
+WHAT I WANT FROM YOU
+- Assume all of the above context.
+- Give production-grade advice.
+- Prefer standard R / Posit / golem best practices.
+- Help me with:
+  - Module structure
+  - Data loading patterns
+  - UI composition
+  - Reusability of plots/tables across tabs
+  - Deployment-safe patterns
+  - Dev vs prod considerations
+
+Please continue helping me design, refine, and scale this golem application under these constraints.

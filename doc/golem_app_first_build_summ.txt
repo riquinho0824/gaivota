@@ -1,0 +1,278 @@
+Absolutely — here is a **clean, corrected, end-to-end summary** of the **first steps to build a golem Shiny app**, incorporating **all corrections and lessons learned in this conversation**.
+
+This reflects **production-grade R + golem + targets thinking**, not toy examples.
+
+---
+
+# ✅ GOLEM PROJECT — FIRST STEPS (CORRECTED & FINAL)
+
+## 0️⃣ Mental model (most important)
+
+> **A golem app is an R package.**
+> Everything follows **R package rules**, not script rules.
+
+Key consequences:
+
+* All `.R` files **must live directly under `R/`**
+* **No subfolders under `R/`**
+* Use **file naming conventions**, not directories
+* Functions only exist after `document()` + `load_all()`
+
+---
+
+## 1️⃣ Prepare your R environment (once)
+
+### Update R itself
+
+* Update R via CRAN / system installer
+* Restart RStudio
+
+### Update packages
+
+```r
+update.packages(ask = FALSE, checkBuilt = TRUE)
+```
+
+(Optional but recommended)
+
+```r
+install.packages(c("golem", "shiny", "devtools", "usethis"))
+```
+
+---
+
+## 2️⃣ Create the golem project (RStudio)
+
+```r
+golem::create_golem(
+  path = "my_golem_app",
+  check_name = FALSE
+)
+```
+
+This:
+
+* Creates an **R package**
+* Initializes Shiny + golem scaffolding
+* Creates `run_app()`
+
+📌 You **do not** manually create folders or projects beforehand — golem does it.
+
+---
+
+## 3️⃣ Understand the generated structure (simplified)
+
+```
+my_golem_app/
+├── R/
+│   ├── app_ui.R
+│   ├── app_server.R
+│   ├── run_app.R
+│   └── utils_helpers.R
+├── inst/
+├── DESCRIPTION
+├── NAMESPACE
+└── dev/
+```
+
+📌 `R/` is **flat** — this is mandatory.
+
+---
+
+## 4️⃣ Adopt the correct file-naming conventions
+
+Since you **cannot** use subfolders under `R/`, use prefixes:
+
+| Purpose           | Prefix    | Example                                |
+| ----------------- | --------- | -------------------------------------- |
+| App core          | `app_`    | `app_ui.R`, `app_server.R`             |
+| Modules           | `mod_`    | `mod_asset_ui.R`, `mod_asset_server.R` |
+| Data access layer | `dal_`    | `dal_asset_metadata.R`                 |
+| Utilities         | `utils_`  | `utils_paths.R`                        |
+| Config            | `config_` | `config_env.R`                         |
+
+This replaces folder-based organization.
+
+---
+
+## 5️⃣ Create a Shiny module (example: asset)
+
+```r
+golem::add_module(name = "asset")
+```
+
+Creates:
+
+```
+R/mod_asset_ui.R
+R/mod_asset_server.R
+```
+
+Modules are the **unit of UI logic**.
+
+---
+
+## 6️⃣ Data access layer (DAL) — CORRECT approach
+
+### Where DAL code lives
+
+✅ `R/dal_*.R`
+❌ `R/shared/` or `R/features/`
+
+Example:
+
+```
+R/dal_asset_metadata.R
+```
+
+### Example DAL function
+
+```r
+read_asset_metadata <- function() {
+  jsonlite::fromJSON(
+    Sys.getenv("ASSET_METADATA_PATH"),
+    simplifyDataFrame = TRUE
+  )
+}
+```
+
+📌 DAL functions:
+
+* Are **plain functions**
+* Not reactive
+* Not UI-aware
+* Easy to test
+
+---
+
+## 7️⃣ Where data is loaded (important)
+
+### Correct place
+
+```r
+app_server <- function(input, output, session) {
+  asset_metadata <- read_asset_metadata()
+
+  mod_asset_server(
+    id = "asset",
+    asset_metadata = asset_metadata
+  )
+}
+```
+
+✔ Loaded once per user session
+✔ Available to all modules
+✔ Safe and predictable
+
+---
+
+## 8️⃣ Sharing data with a `targets` project (best practice)
+
+### Separation of concerns (strongly recommended)
+
+| Project           | Responsibility                       |
+| ----------------- | ------------------------------------ |
+| `targets` project | Data pipelines, marts, parquet, JSON |
+| `golem` project   | UI, visualization, interaction       |
+
+❌ Do not duplicate logic
+❌ Do not re-implement pipelines in golem
+
+### Contract between projects
+
+* `targets` produces:
+
+  * Parquet (large marts)
+  * JSON (metadata, compatibility)
+* `golem` consumes:
+
+  * Parquet via Arrow
+  * JSON via `jsonlite`
+
+---
+
+## 9️⃣ File formats strategy (corrected)
+
+| Use case              | Format           |
+| --------------------- | ---------------- |
+| Large analytical data | Parquet          |
+| Metadata / indexes    | JSON             |
+| R-only caching        | `.qs` (optional) |
+
+📌 JSON is:
+
+* Language-agnostic
+* Readable by Python
+* Compatible with Snowflake ingestion
+
+---
+
+## 🔟 Environment-agnostic paths (dev vs prod)
+
+Use environment variables:
+
+```r
+Sys.getenv("DATA_ROOT")
+```
+
+✔ Safe
+✔ Standard in Linux
+✔ Used by Shiny Server / Docker / CI
+✔ Better than hard-coded paths
+
+---
+
+## 1️⃣1️⃣ Required dev workflow (critical)
+
+Every time you:
+
+* Add a function
+* Rename a file
+* Change documentation
+
+Run:
+
+```r
+devtools::document()
+devtools::load_all()
+run_app()
+```
+
+📌 **Restarting RStudio clears the namespace**
+📌 `run_app()` alone is not enough
+
+---
+
+## 1️⃣2️⃣ Common pitfalls (now avoided)
+
+❌ `.R` files in subfolders under `R/`
+❌ Expecting functions to exist without `load_all()`
+❌ Loading data in `app_ui.R`
+❌ Duplicating `targets` logic
+❌ Hard-coded paths
+
+---
+
+## ✅ Final takeaway
+
+> **Flat `R/`, named files, clean DAL, targets for pipelines, golem for UI.**
+
+This is:
+
+* Idiomatic R
+* Scalable
+* Deployable
+* Compatible with Linux, Snowflake, Python
+* Proven in production golem apps
+
+---
+
+If you want next, I can:
+
+* Refactor your current project structure
+* Propose naming conventions for your marts
+* Add caching safely
+* Show Arrow + Parquet integration
+* Prepare for Shiny Server or Docker deployment
+
+Just tell me 👍
