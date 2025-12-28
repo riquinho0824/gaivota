@@ -11,12 +11,33 @@ app_ui <- function(request) {
     # Your application UI logic
     fluidPage(
       # golem::golem_welcome_page() # Remove this line to start building your UI
+      
+      
+      theme = bslib::bs_theme(
+        bg = "#212121",
+        fg = "#eaeaea",
+        primary = "#0d6efd"),
+        
 
-
-
-        h1("Main Page (1)"),
-        mod_asset_ui("main_page")
+        h1("Main Page (3)"),
+        # mod_asset_ui("main_page")
         # mod_main_ui("main_page")
+        
+        
+        tabsetPanel(
+          tabPanel("| | |",mod_asset_ui("quantamental_first_page")),
+          # tabPanel("Directory landscape", uiOutput("directory")),
+          # tabPanel("Screener", uiOutput("screening")),
+          # tabPanel("Earnings Calendar", uiOutput("earnings")),
+          # tabPanel("Growth", uiOutput("growth")),
+          # 
+          # # tabPanel("DI Curve"    , uiOutput("di_curve")),
+          # tabPanel("Futures",tabsetPanel(
+          #   tabPanel("Brazilian DI Curve",uiOutput("di_curve")),
+          #   tabPanel("Oil Curve",uiOutput("oil_curve")))),
+          # 
+          # tabPanel("BTG reports",uiOutput("btg_reports"))
+        )
 
 
     )
@@ -43,6 +64,7 @@ golem_add_external_resources <- function() {
   )
 
   tags$head(
+    # tags$link( rel="stylesheet",type="text/css",href="www/dark_mode.css"),
     golem::favicon(),
     golem::bundle_resources(
       path = app_sys("app/www"),

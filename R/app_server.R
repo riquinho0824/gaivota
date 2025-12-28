@@ -8,7 +8,7 @@ app_server <- function(input, output, session) {
   # Your application server logic
 
 
-  mod_asset_server("main_page")
+  mod_asset_server("quantamental_first_page")
   # mod_main_server("main_page")
 
 }

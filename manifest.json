@@ -500,7 +500,12 @@
         "Maintainer": "Carson Sievert <carson@posit.co>",
         "Repository": "CRAN",
         "Date/Publication": "2025-01-30 23:20:02 UTC",
-        "Built": "R 4.5.0; ; 2025-04-01 15:54:53 UTC; unix"
+        "Built": "R 4.5.0; ; 2025-04-01 15:54:53 UTC; unix",
+        "RemoteType": "standard",
+        "RemotePkgRef": "bslib",
+        "RemoteRef": "bslib",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemoteSha": "0.9.0"
       }
     },
     "cachem": {
@@ -3855,13 +3860,13 @@
       "checksum": "ecb1f6047d538124f06862b8e7dbfca5"
     },
     "app.R": {
-      "checksum": "617a3600eaf2ccbe407a4d3d46cfc3c1"
+      "checksum": "fccbacbbcdc77c61ae0ed35e68f83414"
     },
     "data/output/b3_index.json": {
       "checksum": "a6eab9e2c26dd3ba6e6b1050b39d1c2f"
     },
     "DESCRIPTION": {
-      "checksum": "f1853b11c91653221e527dc568f0901f"
+      "checksum": "350493a3154b9adf01f565385679868c"
     },
     "dev/01_start.R": {
       "checksum": "3003e8f605c1a699194da3e4148a90ca"
@@ -3880,6 +3885,9 @@
     },
     "doc/golem_app_prompt1": {
       "checksum": "aae74faad9b366a87b5faa9317bdea63"
+    },
+    "inst/app/www/dark_mode.css": {
+      "checksum": "6d20a402c91cf15762140f4ace93387d"
     },
     "inst/app/www/favicon.ico": {
       "checksum": "81560d1b906a530c87fa0acbb2f5cca4"
@@ -3900,16 +3908,16 @@
       "checksum": "2fda0adc91e1469552fa552e59a81d22"
     },
     "R/app_server.R": {
-      "checksum": "096fa36845aa814d7abc467e132205e3"
+      "checksum": "a30d492b5fb86d6e13d15be27bae7062"
     },
     "R/app_ui.R": {
-      "checksum": "2fbe75dfe4d126a6585033d160d5fa40"
+      "checksum": "f984e359782898df3e3dd4c4e8f28d38"
     },
     "R/data_access_layer.R": {
       "checksum": "ceff038234168cbfd7ff37748b2387a2"
     },
     "R/mod_asset.R": {
-      "checksum": "21c7eb317e7fe96d278a3181383e6497"
+      "checksum": "025c1a7159c846edb774acccc656b474"
     },
     "R/mod_main.R": {
       "checksum": "ef35c54b02c60452d3f8da84d0df1b27"

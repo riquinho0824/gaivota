@@ -1,0 +1,23 @@
+/* Entire app background */
+body {
+  background-color: #212121;
+  color: #eaeaea;
+}
+
+/* Shiny main container */
+.container-fluid {
+  background-color: #212121;
+}
+
+/* Optional: cards / panels */
+.well, .panel, .box {
+  background-color: #2b2b2b;
+  color: #eaeaea;
+}
+
+/* Inputs */
+.form-control {
+  background-color: #3a3a3a;
+  color: #ffffff;
+  border-color: #555;
+}

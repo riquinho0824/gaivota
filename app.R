@@ -9,3 +9,4 @@
 pkgload::load_all(export_all = FALSE)
 run_app()
 
+# shinyApp(ui = ui, server = server)

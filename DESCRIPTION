@@ -12,6 +12,7 @@ License: MIT
 Imports: 
     config,
     ggplot2,
+    bslib,
     golem,
     shiny
 Encoding: UTF-8
