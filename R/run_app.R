@@ -1,7 +1,7 @@
 
 if(F){
 
-
+  rsconnect::writeManifest()
   # Golem app is an R package
   # Code changes require:
   devtools::document()
