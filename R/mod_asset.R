@@ -137,6 +137,25 @@ mod_asset_server <- function(id){
                # br(),uiOutput("screening_sectors_list"),br(),br(),br()
       )
     })
+    
+    
+    
+    output$screening_sectors_treemap <- renderPlot({
+      sectors_df <- df %>% left_join(read_IBOV_file(),by="asset") %>% group_by(sector_screening) %>% reframe(share_IBOV=sum(share,na.rm=T),biggest_asset=ifelse(any(!is.na(share)),asset[which.max(share)],""),biggest_share=ifelse(any(!is.na(share)),share[which.max(share)],0)) %>% arrange(desc(share_IBOV))
+      
+      
+      
+      
+      
+      sectors_df %>% 
+        ggplot(aes(area=share_IBOV,subgroup=sector_screening),fill="gray55")+geom_treemap(aes(alpha=share_IBOV))+
+        geom_treemap_text(aes(label=sector_screening),size=18,alpha=.8,place="top")+#scale_color_identity()+
+        geom_treemap_text(aes(label=sprintf("%.1f%%",share_IBOV   )),size=20,colour="black",alpha=.8,place="top",padding.y=grid::unit( 8,"mm"))+
+        geom_treemap_text(aes(label=biggest_asset                  ),size=10,colour="black",alpha=.5,place="top",padding.y=grid::unit(17,"mm"))+
+        geom_treemap_text(aes(label=sprintf("%.1f%%",biggest_share)),size=10,colour="black",alpha=.5,place="top",padding.y=grid::unit(20,"mm"))+
+        # geom_treemap_subgroup_border(colour="gray13")+
+        theme_void()+theme(plot.background=element_rect(fill="gray13",colour="gray13"),legend.position="none")
+    })
 
   })
 }

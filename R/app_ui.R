@@ -19,7 +19,7 @@ app_ui <- function(request) {
         primary = "#0d6efd"),
         
 
-        h1("Main Page (3)"),
+        # h1("Main Page (3)"),
         # mod_asset_ui("main_page")
         # mod_main_ui("main_page")
         
@@ -66,6 +66,7 @@ golem_add_external_resources <- function() {
   tags$head(
     # tags$link( rel="stylesheet",type="text/css",href="www/dark_mode.css"),
     golem::favicon(),
+    # golem::favicon(ico = "www/eagle-favicon.ico"),
     golem::bundle_resources(
       path = app_sys("app/www"),
       app_title = "gaivotapp"

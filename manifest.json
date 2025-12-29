@@ -3890,6 +3890,9 @@
       "checksum": "6d20a402c91cf15762140f4ace93387d"
     },
     "inst/app/www/favicon.ico": {
+      "checksum": "5094b7f4658639816ec6da2f24570774"
+    },
+    "inst/app/www/golem-favicon.ico": {
       "checksum": "81560d1b906a530c87fa0acbb2f5cca4"
     },
     "inst/golem-config.yml": {
@@ -3911,7 +3914,7 @@
       "checksum": "a30d492b5fb86d6e13d15be27bae7062"
     },
     "R/app_ui.R": {
-      "checksum": "f984e359782898df3e3dd4c4e8f28d38"
+      "checksum": "4ae1ec5cf2545cd79dddb466e84a42ed"
     },
     "R/data_access_layer.R": {
       "checksum": "ceff038234168cbfd7ff37748b2387a2"
