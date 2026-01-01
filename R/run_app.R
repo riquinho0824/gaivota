@@ -5,11 +5,10 @@ if(F){
   # Golem app is an R package
   # Code changes require:
   devtools::document()
-  devtools::load_all()
+  # devtools::load_all()
   run_app()
 
 }
-
 
 #' Run the Shiny Application
 #'

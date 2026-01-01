@@ -1,0 +1,89 @@
+Here is a **clean, copy-paste-ready continuation prompt** you can save and reuse later.
+It is written to fully restore context and resume *exactly* where we left off, without re-explaining basics.
+
+---
+
+### 📌 CONTINUATION PROMPT
+
+I am continuing the design of a multi-app Shiny platform built with **golem**, following these decisions:
+
+**Established architecture**
+
+* Multiple golem applications (market data, trading telemetry, ML analytics)
+* Shared core packages:
+
+  * `{quantamentalcore.data}`
+
+    * Pure schemas, ontologies, constants, validation helpers
+    * No Shiny, no golem, no file-system assumptions
+    * Designed to later expose data to Snowflake / external consumers
+  * `{quantamentalcore.ui}`
+
+    * Shiny UI atoms, golem modules, plots, tables
+    * Depends on `{quantamentalcore.data}`
+    * Modules accept data as inputs and never fetch data directly
+
+**Data strategy**
+
+* Data engineering lives in a separate `{targets}` project
+* Apps are read-only consumers
+* Current deployment uses **snapshot data** bundled in `inst/extdata/`
+* Future option to support external data roots via environment variables
+* Deployed to **Posit Connect**, code-only deploys
+
+**Key constraints**
+
+* Flat `R/` directory only (no subfolders)
+* No `source()` in production
+* Proper roxygen exports
+* Modules do not load data internally
+* DAL functions are pure readers
+* App resolves data roots, not core packages
+
+**Current state**
+
+* `{quantamentalcore.data}` has been created with:
+
+  * `asset_schema`
+  * `validate_asset_data()`
+* `{quantamentalcore.ui}` has been created with:
+
+  * `mod_asset_ui()`
+  * `mod_asset_server()`
+  * Plot helpers calling schema validation
+
+**Where we paused**
+You asked me a single clarifying question before proceeding:
+
+> *Do you want to formalize schemas as:*
+>
+> * Named R lists
+> * `arrow::schema()`
+> * JSON Schema
+> * Or another approach?
+
+---
+
+### WHAT I WANT NEXT
+
+Please:
+
+1. Evaluate schema representation options **specifically for**:
+
+   * Parquet today
+   * Snowflake-like exposure later
+   * Validation in Shiny modules
+2. Recommend one primary approach and justify it
+3. Show how that choice affects:
+
+   * `{quantamentalcore.data}` structure
+   * DAL function signatures
+   * UI module expectations
+4. Proceed step-by-step (do not jump ahead)
+5. Keep all advice production-grade and Posit-friendly
+
+Assume full familiarity with R, golem, targets, Arrow, and Posit Connect.
+
+---
+
+If you paste this later, the conversation should resume *exactly* where it stopped.

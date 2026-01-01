@@ -6,10 +6,10 @@
 
 
 ## Manual testing code — NOT documented
-if(F){
-
-  devtools::load_all()
-  run_app()
+# if(F){
+# 
+#   devtools::load_all()
+#   run_app()
 
 
 
@@ -31,7 +31,7 @@ if(F){
 
 
 
-}
+# }
 
 
 
@@ -68,6 +68,15 @@ if(F){
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
+#' @importFrom dplyr filter summarise group_by arrange reframe inner_join as_tibble
+#' @importFrom ggplot2 ggplot aes
+#' @importFrom treemapify geom_treemap
+#' 
+#' @import dplyr
+#' @import ggplot2
+#' @import treemapify
+
+
 mod_asset_ui <- function(id) {
   ns <- NS(id)
   tagList(
@@ -79,6 +88,7 @@ mod_asset_ui <- function(id) {
     
     tabsetPanel(
       tabPanel("Quantamental",uiOutput(ns("quantamental_first_page_explanation"))),
+      tabPanel("table",uiOutput(ns("asset_table"))),
       # tabPanel("Dendrogram", uiOutput("quantamental_first_page_dendrogram")),
       # tabPanel("PCA", uiOutput("quantamental_first_page_pca")),
       # tabPanel("Sankey", uiOutput("sectors_sankey_diagram_ui")),
@@ -96,9 +106,12 @@ mod_asset_ui <- function(id) {
 mod_asset_server <- function(id){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
-
+    
+    b3_index <- get_b3_index()
+    ontology <- get_ontology()
+    
     output$asset_table <- renderTable({
-      b3_index <- get_b3_index()
+      # b3_index <- get_b3_index()
       b3_index$SMLL
     })
     
@@ -119,7 +132,7 @@ mod_asset_server <- function(id){
                         p(style="text-align: right; font-size: 10px;","source: https://www.b3.com.br/pt_br/market-data-e-indices/indices/indices-amplos/ibovespa.htm")),
                  column(1,div())
                ),
-               #br(),fluidRow(column(2,div()),column(8,plotOutput("screening_sectors_treemap")),column(2,div())),
+               br(),fluidRow(column(2,div()),column(8,plotOutput(ns("screening_sectors_treemap"))),column(2,div())),
                br(),fluidRow(
                  column(1,div()),
                  column(10,
@@ -139,16 +152,20 @@ mod_asset_server <- function(id){
     })
     
     
-    
     output$screening_sectors_treemap <- renderPlot({
-      sectors_df <- df %>% left_join(read_IBOV_file(),by="asset") %>% group_by(sector_screening) %>% reframe(share_IBOV=sum(share,na.rm=T),biggest_asset=ifelse(any(!is.na(share)),asset[which.max(share)],""),biggest_share=ifelse(any(!is.na(share)),share[which.max(share)],0)) %>% arrange(desc(share_IBOV))
+      # sectors_df <- df  |>  left_join(read_IBOV_file(),by="asset")  |>  group_by(sector_screening)  |>  reframe(share_IBOV=sum(share,na.rm=T),biggest_asset=ifelse(any(!is.na(share)),asset[which.max(share)],""),biggest_share=ifelse(any(!is.na(share)),share[which.max(share)],0))  |>  arrange(desc(share_IBOV))
       
       
+      # b3_index <- get_b3_index()
+      df <- ontology$assets  |>  as.data.frame()
+      
+      # df  |>  right_join(b3_index$IBOV,by="asset")  |>  filter(is.na(company_name))
+      
+      sectors_df <- df  |>  inner_join(b3_index$IBOV,by="asset")  |>  group_by(sector_screening)  |>  reframe(share_IBOV=sum(share,na.rm=T),biggest_asset=ifelse(any(!is.na(share)),asset[which.max(share)],""),biggest_share=ifelse(any(!is.na(share)),share[which.max(share)],0))  |>  arrange(desc(share_IBOV))
       
       
-      
-      sectors_df %>% 
-        ggplot(aes(area=share_IBOV,subgroup=sector_screening),fill="gray55")+geom_treemap(aes(alpha=share_IBOV))+
+      sectors_df  |>  
+        ggplot(aes(area=share_IBOV,subgroup=sector_screening))+geom_treemap(aes(alpha=share_IBOV),fill="gray55")+
         geom_treemap_text(aes(label=sector_screening),size=18,alpha=.8,place="top")+#scale_color_identity()+
         geom_treemap_text(aes(label=sprintf("%.1f%%",share_IBOV   )),size=20,colour="black",alpha=.8,place="top",padding.y=grid::unit( 8,"mm"))+
         geom_treemap_text(aes(label=biggest_asset                  ),size=10,colour="black",alpha=.5,place="top",padding.y=grid::unit(17,"mm"))+

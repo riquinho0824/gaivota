@@ -12,6 +12,8 @@ License: MIT
 Imports: 
     config,
     ggplot2,
+    dplyr,
+    treemapify,
     bslib,
     golem,
     shiny
