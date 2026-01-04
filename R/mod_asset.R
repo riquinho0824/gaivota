@@ -107,8 +107,8 @@ mod_asset_server <- function(id){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
     
-    b3_index <- get_b3_index()
-    ontology <- get_ontology()
+    b3_index <- quantamental.data::get_b3_index()
+    ontology <- quantamental.data::get_ontology()
     
     output$asset_table <- renderTable({
       # b3_index <- get_b3_index()

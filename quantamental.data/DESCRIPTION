@@ -1,0 +1,26 @@
+Package: quantamental.data
+Type: Package
+Title: Quantamental Data Access Layer
+Version: 0.1.0
+Authors@R: 
+    person(
+        given = "Marcos",
+        family = "Lima",
+        role = c("aut", "cre"),
+        email = "your.email@domain.com"
+    )
+Description: 
+    Data access layer for quantamental applications.
+    Provides a stable interface for reading quantamental data marts
+    stored as Parquet, JSON, or remote sources.
+License: MIT
+Encoding: UTF-8
+LazyData: false
+Imports:
+    arrow,
+    dplyr,
+    jsonlite,
+    purrr,
+    rlang
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3

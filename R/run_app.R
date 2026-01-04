@@ -7,6 +7,22 @@ if(F){
   devtools::document()
   # devtools::load_all()
   run_app()
+  
+  
+  
+  
+  renv::snapshot()
+  renv::record(
+    list(
+      quantamental.data = list(
+        Source = "path",
+        Path   = "/quantamental.data",
+        Package = "quantamental.data",
+        Version = "0.1.0"
+      )
+    )
+  )
+  
 
 }
 

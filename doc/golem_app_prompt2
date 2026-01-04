@@ -1,0 +1,84 @@
+I’m building a Shiny application using the golem framework in R, and I want guidance that assumes the following context and decisions have already been made:
+
+ARCHITECTURE & GOALS
+- I am using golem (package-based Shiny app).
+- I have a separate R project using targets that builds data marts.
+- The golem app is read-only and consumes outputs from those marts.
+- Data marts are mainly Parquet (split by year/group) plus some derived metadata.
+- I want clean separation between:
+  - data engineering (targets project)
+  - application/UI logic (golem project)
+
+DEPLOYMENT CONSTRAINTS
+- The app is deployed to Posit Connect.
+- Posit deploys only code, not arbitrary external data.
+- I do NOT have permission to copy data into the Posit server filesystem.
+- Therefore, I may need to:
+  - Either consume externally published data (if available)
+  - Or bundle a ≤100 MB snapshot of the data inside the app
+
+DATA STRATEGY (SNAPSHOT OPTION FOR A POC)
+- For now, I am using a SNAPSHOT approach:
+  - Data is bundled inside the golem project under `inst/extdata/`
+  - This makes the app a “snapshot-in-time” application
+  - Updates require redeploying the app
+
+DATA STRATEGY
+- I understand that `inst/` is always bundled during deploy because golem apps are installed as R packages. (Explanation: First, by relying on inst/ you are explicitly accepting the R package contract: anything placed there becomes part of the installed artifact and is guaranteed to exist at runtime in every environment (local dev, Shiny Server, Docker, CI). This eliminates an entire class of bugs related to missing files, relative paths, working directories, or environment-specific layouts. Your app no longer depends on “where it’s run from,” only on what’s installed.)
+- I access bundled data via `system.file("extdata", package = golem::get_golem_name())` (Explanation: Second, using system.file("extdata", package = golem::get_golem_name()) enforces location transparency. You never assume a filesystem path; instead, you ask R’s package system where the data lives. This makes your code robust to installation paths, versioned libraries, and containerized deployments, and it clearly documents that the data is owned by the package, not by the runtime environment.)
+- I do NOT write to this data at runtime. (Explanation: Third, by not writing to this data at runtime, you preserve immutability, which is critical for reliable Shiny apps. Bundled data becomes a read-only reference (lookups, defaults, schemas, demo datasets), ensuring that sessions cannot corrupt shared state, that concurrent users are safe, and that behavior is deterministic across restarts. Any stateful or environment-specific data is correctly pushed outside the package (e.g., env vars, external stores, caches).)
+- I may later support external data via environment variables (e.g. DATA_ROOT),
+  with snapshot data as a fallback.
+
+CODE ORGANIZATION RULES (IMPORTANT)
+- All R code must live in a FLAT `R/` directory.
+- Subdirectories under `R/` are NOT supported by R package namespaces.
+- No `source()` hacks for production code.
+- Functions must be:
+  - Defined in files directly under `R/`
+  - Properly exported with roxygen2 if used across files
+  - Available in the package namespace after `devtools::document()` + `load_all()`
+
+MODULE DESIGN
+- monorepo-with-multiple-packages pattern
+- I am using golem modules.
+- A module does NOT have to equal a tab.
+- A single domain (e.g. “asset”) may:
+  - Have multiple plots and tables
+  - Be rendered in multiple tabs
+  - Share data logic and rendering helpers
+- I typically define:
+  - mod_asset_ui()
+  - mod_asset_server()
+  in a single file (e.g. R/mod_asset.R)
+- Helper functions for data access or plotting live in separate R files (flat structure).
+
+DATA ACCESS LAYER (DAL)
+- I use DAL-style functions like:
+  - read_asset_metadata()
+  - read_asset_parquet()
+- These functions are pure readers and do not load data at file parse time.
+- Data is loaded in `app_server()` and passed to modules.
+
+TECH STACK
+- R, golem, Shiny
+- targets (separate project)
+- Arrow (Parquet)
+- jsonlite (JSON metadata)
+- Posit Connect
+
+WHAT I WANT FROM YOU
+- Assume all of the above context.
+- Give production-grade advice.
+- Prefer standard R / Posit / golem best practices.
+- Help me with:
+  - Module structure
+  - Data loading patterns
+  - UI composition
+  - Reusability of plots/tables across tabs
+  - Deployment-safe patterns
+  - Dev vs prod considerations
+
+Please continue helping me design, refine, and scale this golem application under these constraints.
+
+

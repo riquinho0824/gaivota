@@ -21,7 +21,12 @@ usethis::use_package("ggplot2")
 ---
 load packages
 ---
+devtools::load_all("quantamental.data")
 devtools::load_all("quantamentalcore.data")
 devtools::load_all("quantamentalcore.ui")
 
+---
+install packages
+---
+devtools::install("quantamental.data")
 
