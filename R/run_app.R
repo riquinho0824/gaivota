@@ -1,14 +1,29 @@
 
 if(F){
 
-  rsconnect::writeManifest()
+  rsconnect::writeManifest()      # update manifest.json used in shinny apps
+  renv::snapshot()                # update renv.lock with all packages used in this project
   # Golem app is an R package
   # Code changes require:
   devtools::document()
-  # devtools::load_all()
+  # devtools::load_all() # devtools::document() already load all
   run_app()
   
   
+  
+  
+  renv::status()
+  
+  devtools::load_all("../quantamental.data")
+  
+  tail(get_b3_index()$IBOV)
+  test_external_dal()
+  
+  Sys.getenv("DURIN_DATA")
+  
+  renv::install(
+    "your-org/quantamental-platform/packages/quantamental.data"
+  )
   
   
   renv::snapshot()

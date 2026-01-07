@@ -12,10 +12,16 @@
 print("app.R script start")
 # Pacakges load ################################################################
 # Installs pacman ("package manager") if needed
-if (!require("pacman")) install.packages("pacman")
+# if (!require("pacman")) install.packages("pacman")
 # Use pacman to load add-on packages as desired
 # Packages I load every time; uses "pacman"
-pacman::p_load(pacman,tidyverse,rio,jsonlite,treemapify)
+# pacman::p_load(pacman,tidyverse,rio,jsonlite,treemapify)
+
+# 
+library("tidyverse")
+library("rio")
+library("jsonlite")
+library("treemapify")
 # 
 print("app.R packages loaded")
 # 

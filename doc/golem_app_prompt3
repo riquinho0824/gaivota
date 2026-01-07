@@ -1,0 +1,199 @@
+
+
+
+I’m building a Shiny application using the **golem** framework in R, and I want guidance that assumes the following context and decisions have already been made.
+
+---
+
+## ARCHITECTURE & GOALS
+
+* I am using **golem** (package-based Shiny app).
+* I have a **separate R project** using **targets** that builds data marts.
+* The golem app is **read-only** and consumes outputs from those marts.
+* Data marts are mainly **Parquet** (partitioned by year / group), plus some derived metadata (JSON, small tables).
+* I want **clean separation** between:
+
+  * **Data engineering** (targets project)
+  * **Application / UI logic** (golem project)
+* I follow a **monorepo-with-multiple-packages** mindset, but repositories may be separate.
+
+---
+
+## DATA ACCESS LAYER (DAL)
+
+* I have a dedicated R package called **`quantamental.data`**:
+
+  * Public GitHub repository
+  * Installed via GitHub in applications
+  * Managed via `renv`
+* This package acts as a **Data Access Layer (DAL)**.
+* DAL functions are:
+
+  * Pure readers
+  * Side-effect free
+  * Do **not** load data at file parse time
+* Typical DAL functions:
+
+  * `read_asset_metadata()`
+  * `read_asset_parquet()`
+  * `read_index_composition()`
+* DAL functions abstract:
+
+  * File paths
+  * Partitioning logic
+  * Snapshot vs external data resolution
+
+---
+
+## DEPLOYMENT CONSTRAINTS (POSIT CONNECT)
+
+* The application is deployed to **Posit Connect**.
+* Posit deploys **only code**, not arbitrary external files.
+* I do **not** have permission to copy data into the server filesystem.
+* Therefore:
+
+  * Data must either be:
+
+    * Bundled inside the app/package, **or**
+    * Accessed via explicitly supported external mechanisms (future phase)
+* `renv.lock` is authoritative for deployment.
+
+---
+
+## DATA STRATEGY — SNAPSHOT MODE (CURRENT POC)
+
+* I am currently using a **snapshot-in-time** strategy:
+
+  * Data is bundled inside the golem app under `inst/extdata/`
+  * App is redeployed when data changes
+* This is intentional and acceptable for:
+
+  * Proof of concept
+  * Demo / internal tools
+  * Deterministic analytics
+
+### Rationale (Accepted Constraints)
+
+* `inst/` is always bundled because golem apps are installed as R packages.
+* Using `inst/extdata` explicitly accepts the **R package contract**:
+
+  * Data exists at runtime in all environments
+  * No reliance on working directories or relative paths
+* Data is accessed via:
+
+```r
+system.file("extdata", package = golem::get_golem_name())
+```
+
+* This enforces:
+
+  * Location transparency
+  * Container-safe paths
+  * Versioned data ownership by the package
+* Bundled data is **read-only at runtime**:
+
+  * No mutation
+  * No shared state
+  * Deterministic behavior across sessions
+
+---
+
+## FUTURE DATA STRATEGY (NOT IMPLEMENTED YET)
+
+* I may later support **external data roots** via environment variables (e.g. `DATA_ROOT`)
+* Snapshot data would remain as a **fallback**
+* DAL functions would decide resolution order (external → snapshot)
+
+---
+
+## CODE ORGANIZATION RULES (STRICT)
+
+* All R code lives in a **flat `R/` directory**
+* Subdirectories under `R/` are **not supported** by R package namespaces
+* No `source()` hacks for production code
+* All functions must:
+
+  * Be defined in files directly under `R/`
+  * Be properly exported via **roxygen2** if used across files
+  * Be available after `devtools::document()` and `load_all()`
+
+---
+
+## MODULE DESIGN PRINCIPLES
+
+* I use **golem modules**
+* A module does **not** need to correspond 1:1 with a tab
+* A single domain (e.g. *asset*, *index*, *pair*) may:
+
+  * Own multiple plots and tables
+  * Be rendered in multiple tabs
+  * Share data logic and rendering helpers
+* Typical module structure:
+
+  * `mod_asset_ui()`
+  * `mod_asset_server()`
+* Modules live in files like:
+
+  * `R/mod_asset.R`
+* Shared helpers (plot builders, formatters, transforms) live in separate flat `R/` files
+
+---
+
+## DATA FLOW CONVENTIONS
+
+* Data loading happens in:
+
+  * `app_server()` or top-level orchestration functions
+* Loaded data (or reactive wrappers) are passed into modules
+* Modules:
+
+  * Do not read from disk directly
+  * Do not know about file paths
+  * Depend only on inputs provided to them
+
+---
+
+## TECH STACK
+
+* R
+* Shiny
+* golem
+* targets (separate project)
+* Arrow (Parquet)
+* jsonlite
+* renv
+* Posit Connect
+
+---
+
+## UPCOMING GOALS
+
+* Validate that this architecture also supports:
+
+  * A **read-only API service** (e.g. plumber or httpuv-based)
+  * Using the same DAL and data strategy
+* Continue scaling:
+
+  * More modules
+  * More datasets
+  * More apps consuming the same DAL
+
+---
+
+## WHAT I WANT FROM YOU
+
+* Assume **all of the above context**
+* Do **not** re-explain basics
+* Give **production-grade**, opinionated guidance
+* Prefer standard R / Posit / golem best practices
+* Help me with:
+
+  * Module boundaries
+  * Data loading orchestration
+  * Reusable plot/table patterns
+  * UI composition across tabs
+  * Deployment-safe patterns
+  * Dev vs prod considerations
+  * Preparing this architecture for API services
+
+Please continue helping me **design, refine, and scale** this golem-based quantamental platform under these constraints.
